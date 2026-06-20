@@ -195,10 +195,8 @@ p{margin:0 0 1em; color:var(--ink-soft); line-height:1.7;}
 .illus.in-view{opacity:var(--illus-opacity,.16); transform:translateY(0) scale(1);}
 
 /* camadas responsivas: mobile mostra só o essencial, tablet ~60%, desktop 100% */
-.illus--standard{display:none;}
-.illus--extra{display:none;}
-@media (min-width:768px){.illus--standard{display:block;}}
-@media (min-width:1024px){.illus--extra{display:block;}}
+.illus--standard{display:block;}
+.illus--extra{display:block;}
 
 /* flutuação extremamente sutil, respeitando redução de movimento */
 @media (prefers-reduced-motion:no-preference){
@@ -504,8 +502,9 @@ p{margin:0 0 1em; color:var(--ink-soft); line-height:1.7;}
 
 /* jornada ilustrada do ursinho ao lado de cada etapa */
 .timeline-icon-deco{
-  display:none; flex-shrink:0; margin-left:auto; align-self:center;
+  display:block; flex-shrink:0; margin-left:auto; align-self:center;
   opacity:.18; pointer-events:none; user-select:none;
+  width:38px; height:38px;
 }
 .timeline-icon-deco .deco-stage{position:relative; display:block; width:100%; height:100%;}
 .timeline-icon-deco .deco-stage svg:first-child{width:100%; height:100%; display:block;}
@@ -513,8 +512,8 @@ p{margin:0 0 1em; color:var(--ink-soft); line-height:1.7;}
 .timeline-icon-deco--bottom-right .deco-companion{bottom:-2%; right:-8%;}
 .timeline-icon-deco--standard{}
 .timeline-icon-deco--extra{}
-@media (min-width:768px){.timeline-icon-deco--standard{display:block; width:54px; height:54px;}}
-@media (min-width:1024px){.timeline-icon-deco--extra{display:block; width:62px; height:62px;}}
+@media (min-width:768px){.timeline-icon-deco--standard{width:54px; height:54px;}}
+@media (min-width:1024px){.timeline-icon-deco--extra{width:62px; height:62px;}}
 
 /* ============================================================
    FAQ
