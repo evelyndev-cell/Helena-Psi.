@@ -162,7 +162,7 @@ p{margin:0 0 1em; color:var(--ink-soft); line-height:1.7;}
 .section--lilac{background:var(--tint-lilac);}
 .section--pink{background:var(--tint-pink);}
 
-.section-head{max-width:58ch; margin-bottom:3rem;}
+.section-head{max-width:58ch; margin-bottom:3rem; position:relative; z-index:1;}
 .section-head.center{margin-left:auto;margin-right:auto;text-align:center;}
 
 /* organic blobs */
@@ -180,6 +180,34 @@ p{margin:0 0 1em; color:var(--ink-soft); line-height:1.7;}
 .wave-divider svg{display:block; width:100%; height:48px;}
 @media (min-width:640px){.wave-divider svg{height:64px;}}
 @media (min-width:1024px){.wave-divider svg{height:84px;}}
+
+/* ============================================================
+   ILUSTRAÇÕES 2D — narrativa visual da infância
+   Camada decorativa: nunca interativa, nunca acima do conteúdo.
+   ============================================================ */
+.illus{
+  position:absolute; z-index:0; pointer-events:none; user-select:none;
+  opacity:0; transform:translateY(18px) scale(.92);
+  transition:opacity .9s var(--ease), transform .9s var(--ease);
+  will-change:opacity, transform;
+}
+.illus svg{width:100%; height:100%; display:block;}
+.illus.in-view{opacity:var(--illus-opacity,.16); transform:translateY(0) scale(1);}
+
+/* camadas responsivas: mobile mostra só o essencial, tablet ~60%, desktop 100% */
+.illus--standard{display:none;}
+.illus--extra{display:none;}
+@media (min-width:768px){.illus--standard{display:block;}}
+@media (min-width:1024px){.illus--extra{display:block;}}
+
+/* flutuação extremamente sutil, respeitando redução de movimento */
+@media (prefers-reduced-motion:no-preference){
+  .illus-float.in-view{animation:illus-bob var(--illus-dur,9s) ease-in-out var(--illus-delay,0s) infinite;}
+}
+@keyframes illus-bob{
+  0%,100%{transform:translateY(0) scale(1);}
+  50%{transform:translateY(-8px) scale(1);}
+}
 
 /* buttons */
 .btn{
@@ -373,15 +401,16 @@ p{margin:0 0 1em; color:var(--ink-soft); line-height:1.7;}
   box-shadow:var(--shadow-card);
 }
 .tag-pill .dot{width:8px;height:8px;border-radius:50%; flex-shrink:0;}
-.connect-row{display:grid; gap:3rem; align-items:start;}
+.connect-row{display:grid; gap:3rem; align-items:start; position:relative; z-index:1;}
 @media (min-width:900px){.connect-row{grid-template-columns:1fr 1fr;}}
 
 /* ============================================================
    CARD GRIDS (benefícios / diferenciais)
    ============================================================ */
-.card-grid{display:grid; gap:1.6rem; position:relative; z-index:1;}
-@media (min-width:640px){.card-grid{grid-template-columns:repeat(2,1fr);}}
-@media (min-width:1024px){.card-grid{grid-template-columns:repeat(3,1fr);}}
+.card-grid{display:flex; flex-wrap:wrap; justify-content:center; gap:1.6rem; position:relative; z-index:1;}
+.card-grid .card{flex:1 1 280px; max-width:360px;}
+@media (min-width:640px){.card-grid .card{flex-basis:calc(50% - .8rem);}}
+@media (min-width:1024px){.card-grid .card{flex-basis:calc(33.333% - 1.0667rem);}}
 
 .card{
   background:var(--white); border:1px solid var(--border-soft); border-radius:var(--radius-lg);
@@ -472,6 +501,20 @@ p{margin:0 0 1em; color:var(--ink-soft); line-height:1.7;}
 .timeline-content{padding-top:.4rem;}
 .timeline-content h3{margin-bottom:.4rem;}
 .timeline-content p{margin:0; font-size:.95rem; max-width:50ch;}
+
+/* jornada ilustrada do ursinho ao lado de cada etapa */
+.timeline-icon-deco{
+  display:none; flex-shrink:0; margin-left:auto; align-self:center;
+  opacity:.18; pointer-events:none; user-select:none;
+}
+.timeline-icon-deco .deco-stage{position:relative; display:block; width:100%; height:100%;}
+.timeline-icon-deco .deco-stage svg:first-child{width:100%; height:100%; display:block;}
+.timeline-icon-deco .deco-companion{position:absolute; width:36%; height:36%;}
+.timeline-icon-deco--bottom-right .deco-companion{bottom:-2%; right:-8%;}
+.timeline-icon-deco--standard{}
+.timeline-icon-deco--extra{}
+@media (min-width:768px){.timeline-icon-deco--standard{display:block; width:54px; height:54px;}}
+@media (min-width:1024px){.timeline-icon-deco--extra{display:block; width:62px; height:62px;}}
 
 /* ============================================================
    FAQ
@@ -677,6 +720,175 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
 
 <symbol id="icon-leaf" viewBox="0 0 48 48"><path d="M10 38C8 22 18 10 38 9c1 18-9 27-28 29Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 36C20 26 27 19 36 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
 
+<!-- ============================================================
+     COLEÇÃO DE ILUSTRAÇÕES 2D — narrativa visual da infância
+     Flat design premium, traços suaves, paleta da marca apenas.
+     ============================================================ -->
+<symbol id="illus-bear" viewBox="0 0 120 120">
+  <circle cx="38" cy="30" r="14" fill="#7D7A64"/>
+  <circle cx="82" cy="30" r="14" fill="#7D7A64"/>
+  <circle cx="38" cy="31" r="5.5" fill="#FC7EC6"/>
+  <circle cx="82" cy="31" r="5.5" fill="#FC7EC6"/>
+  <circle cx="60" cy="52" r="32" fill="#7D7A64"/>
+  <ellipse cx="60" cy="60" rx="13" ry="10" fill="none" stroke="#FC7EC6" stroke-width="2.4"/>
+  <circle cx="60" cy="54" r="3" fill="#3A332F"/>
+  <circle cx="50" cy="48" r="2.4" fill="#3A332F"/>
+  <circle cx="70" cy="48" r="2.4" fill="#3A332F"/>
+  <ellipse cx="60" cy="100" rx="34" ry="26" fill="#7D7A64"/>
+  <circle cx="28" cy="94" r="11" fill="#7D7A64"/>
+  <circle cx="92" cy="94" r="11" fill="#7D7A64"/>
+</symbol>
+
+<symbol id="illus-bear-soft" viewBox="0 0 120 120">
+  <circle cx="38" cy="30" r="14" fill="#FFFFFF"/>
+  <circle cx="82" cy="30" r="14" fill="#FFFFFF"/>
+  <circle cx="60" cy="52" r="32" fill="#FFFFFF"/>
+  <ellipse cx="60" cy="100" rx="34" ry="26" fill="#FFFFFF"/>
+  <circle cx="28" cy="94" r="11" fill="#FFFFFF"/>
+  <circle cx="92" cy="94" r="11" fill="#FFFFFF"/>
+</symbol>
+
+<symbol id="illus-doll" viewBox="0 0 100 132">
+  <path d="M30 26c0-14 9-22 20-22s20 8 20 22" fill="none" stroke="#FC7EC6" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="50" cy="32" r="20" fill="#A78C9B"/>
+  <circle cx="43" cy="30" r="2.3" fill="#3A332F"/>
+  <circle cx="57" cy="30" r="2.3" fill="#3A332F"/>
+  <path d="M44 38c3 3 9 3 12 0" fill="none" stroke="#3A332F" stroke-width="2" stroke-linecap="round"/>
+  <path d="M30 52 L70 52 L82 112 L18 112 Z" fill="#A78C9B"/>
+  <path d="M30 56 L14 86" stroke="#A78C9B" stroke-width="8" stroke-linecap="round"/>
+  <path d="M70 56 L86 86" stroke="#A78C9B" stroke-width="8" stroke-linecap="round"/>
+  <path d="M40 112 L36 130" stroke="#A78C9B" stroke-width="8" stroke-linecap="round"/>
+  <path d="M60 112 L64 130" stroke="#A78C9B" stroke-width="8" stroke-linecap="round"/>
+</symbol>
+
+<symbol id="illus-doll-soft" viewBox="0 0 100 132">
+  <circle cx="50" cy="32" r="20" fill="#FFFFFF"/>
+  <path d="M30 52 L70 52 L82 112 L18 112 Z" fill="#FFFFFF"/>
+</symbol>
+
+<symbol id="illus-rabbit" viewBox="0 0 100 120">
+  <ellipse cx="38" cy="20" rx="9" ry="26" fill="#A78C9B"/>
+  <ellipse cx="62" cy="20" rx="9" ry="26" fill="#A78C9B"/>
+  <ellipse cx="38" cy="22" rx="4" ry="18" fill="#FCEC7E"/>
+  <ellipse cx="62" cy="22" rx="4" ry="18" fill="#FCEC7E"/>
+  <circle cx="50" cy="58" r="26" fill="#A78C9B"/>
+  <circle cx="42" cy="56" r="2.3" fill="#3A332F"/>
+  <circle cx="58" cy="56" r="2.3" fill="#3A332F"/>
+  <ellipse cx="50" cy="64" rx="5" ry="3.4" fill="#FC7EC6"/>
+  <ellipse cx="50" cy="100" rx="28" ry="22" fill="#A78C9B"/>
+</symbol>
+
+<symbol id="illus-fox" viewBox="0 0 110 110">
+  <path d="M28 28 L18 4 L42 22 Z" fill="#FC7EC6"/>
+  <path d="M82 28 L92 4 L68 22 Z" fill="#FC7EC6"/>
+  <circle cx="55" cy="48" r="28" fill="#FC7EC6"/>
+  <path d="M40 54c4 13 26 13 30 0c-4 8-26 8-30 0Z" fill="none" stroke="#7D7A64" stroke-width="2.2"/>
+  <circle cx="55" cy="58" r="2.4" fill="#3A332F"/>
+  <circle cx="45" cy="44" r="2.2" fill="#3A332F"/>
+  <circle cx="65" cy="44" r="2.2" fill="#3A332F"/>
+  <ellipse cx="55" cy="90" rx="24" ry="18" fill="#FC7EC6"/>
+  <path d="M76 92c16 3 23-10 16-23c9 6 9 23-4 29c-6 3-10 0-12-6Z" fill="#FC7EC6"/>
+</symbol>
+
+<symbol id="illus-giraffe" viewBox="0 0 90 150">
+  <circle cx="40" cy="10" r="4" fill="#7D7A64"/>
+  <circle cx="52" cy="10" r="4" fill="#7D7A64"/>
+  <line x1="40" y1="14" x2="40" y2="22" stroke="#FCEC7E" stroke-width="3"/>
+  <line x1="52" y1="14" x2="52" y2="22" stroke="#FCEC7E" stroke-width="3"/>
+  <ellipse cx="46" cy="34" rx="14" ry="16" fill="#FCEC7E"/>
+  <circle cx="40" cy="32" r="2.1" fill="#3A332F"/>
+  <circle cx="52" cy="32" r="2.1" fill="#3A332F"/>
+  <path d="M36 46 L34 100 L58 100 L50 46Z" fill="#FCEC7E"/>
+  <circle cx="42" cy="62" r="4" fill="#7D7A64" opacity=".5"/>
+  <circle cx="52" cy="78" r="3.4" fill="#7D7A64" opacity=".5"/>
+  <circle cx="40" cy="90" r="3" fill="#7D7A64" opacity=".5"/>
+  <ellipse cx="46" cy="118" rx="26" ry="18" fill="#FCEC7E"/>
+</symbol>
+
+<symbol id="illus-elephant" viewBox="0 0 120 100">
+  <circle cx="30" cy="42" r="20" fill="#7EF1FC" opacity=".75"/>
+  <circle cx="90" cy="42" r="20" fill="#7EF1FC" opacity=".75"/>
+  <ellipse cx="60" cy="56" rx="34" ry="26" fill="#7EF1FC"/>
+  <circle cx="50" cy="50" r="2.3" fill="#3A332F"/>
+  <circle cx="70" cy="50" r="2.3" fill="#3A332F"/>
+  <path d="M58 70c-2 12-2 20 6 24" fill="none" stroke="#7EF1FC" stroke-width="9" stroke-linecap="round"/>
+  <rect x="40" y="76" width="10" height="16" rx="4" fill="#7EF1FC"/>
+  <rect x="70" y="76" width="10" height="16" rx="4" fill="#7EF1FC"/>
+</symbol>
+
+<symbol id="illus-book" viewBox="0 0 100 70">
+  <path d="M50 14c-10-8-26-10-40-6v46c14-4 30-2 40 6c10-8 26-10 40-6V8c-14-4-30-2-40 6Z" fill="#FC7EC6"/>
+  <path d="M50 14v46" stroke="#7D7A64" stroke-width="2"/>
+</symbol>
+
+
+<symbol id="illus-kite" viewBox="0 0 60 90">
+  <path d="M30 4 L52 30 L30 50 L8 30 Z" fill="#7EF1FC"/>
+  <path d="M30 50c-2 14-2 24 6 36" fill="none" stroke="#A78C9B" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="33" cy="64" r="2" fill="#FCEC7E"/>
+  <circle cx="38" cy="76" r="2" fill="#FC7EC6"/>
+  <circle cx="34" cy="86" r="2" fill="#A78C9B"/>
+</symbol>
+
+<symbol id="illus-star" viewBox="0 0 40 40">
+  <path d="M20 2l4.5 11.6L36 16l-9 8.2L29.5 38 20 30.8 10.5 38 13 24.2 4 16l11.5-2.4Z" fill="#FCEC7E"/>
+</symbol>
+
+<symbol id="illus-sparkle" viewBox="0 0 60 36">
+  <path d="M10 2l1.6 5L17 9l-5.4 2-1.6 5-1.6-5L3 9l5.4-2Z" fill="#FCEC7E"/>
+  <circle cx="36" cy="6" r="2.2" fill="#FC7EC6"/>
+  <circle cx="50" cy="20" r="1.6" fill="#7EF1FC"/>
+  <path d="M26 24l1.2 3.6L31 29l-3.8 1.4L26 34l-1.2-3.6L21 29l3.8-1.4Z" fill="#FCEC7E" opacity=".85"/>
+</symbol>
+
+<symbol id="illus-cloud" viewBox="0 0 100 56">
+  <path d="M22 48a18 18 0 0 1-2-35.8A22 22 0 0 1 62 6a18 18 0 0 1 16 32H22Z" fill="#7EF1FC" opacity=".6"/>
+</symbol>
+
+<symbol id="illus-flower" viewBox="0 0 50 50">
+  <g fill="#FC7EC6" opacity=".8">
+    <circle cx="25" cy="12" r="8"/><circle cx="38" cy="25" r="8"/>
+    <circle cx="25" cy="38" r="8"/><circle cx="12" cy="25" r="8"/>
+  </g>
+  <circle cx="25" cy="25" r="7" fill="#FCEC7E"/>
+</symbol>
+
+<symbol id="illus-leaves" viewBox="0 0 60 60">
+  <path d="M10 50C6 30 18 12 44 8c2 22-10 36-34 42Z" fill="#647B7D" opacity=".4"/>
+</symbol>
+
+<symbol id="illus-tree" viewBox="0 0 90 110">
+  <circle cx="45" cy="34" r="28" fill="#647B7D" opacity=".35"/>
+  <circle cx="24" cy="46" r="18" fill="#647B7D" opacity=".3"/>
+  <circle cx="66" cy="46" r="18" fill="#647B7D" opacity=".3"/>
+  <rect x="40" y="56" width="10" height="40" rx="3" fill="#A78C9B" opacity=".4"/>
+</symbol>
+
+<symbol id="illus-bird" viewBox="0 0 40 20">
+  <path d="M2 14c4-10 10-10 14 0M22 14c4-10 10-10 14 0" fill="none" stroke="#647B7D" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+</symbol>
+
+<symbol id="illus-starry-sky" viewBox="0 0 300 160">
+  <g fill="#FCEC7E">
+    <circle cx="20" cy="20" r="1.6"/><circle cx="60" cy="50" r="2"/><circle cx="110" cy="14" r="1.4"/>
+    <circle cx="150" cy="40" r="2.2"/><circle cx="190" cy="10" r="1.6"/><circle cx="230" cy="34" r="1.8"/>
+    <circle cx="270" cy="16" r="1.4"/><circle cx="40" cy="90" r="1.4"/><circle cx="130" cy="80" r="1.6"/>
+    <circle cx="220" cy="76" r="1.4"/><circle cx="280" cy="100" r="1.8"/>
+  </g>
+  <path d="M85 36l3 8 8 3-8 3-3 8-3-8-8-3 8-3Z" fill="#FCFBF9" opacity=".9"/>
+  <path d="M255 56l2.4 6.4 6.4 2.4-6.4 2.4-2.4 6.4-2.4-6.4-6.4-2.4 6.4-2.4Z" fill="#FCFBF9" opacity=".8"/>
+</symbol>
+
+<symbol id="illus-motion" viewBox="0 0 60 20">
+  <circle cx="6" cy="10" r="2" fill="#A78C9B" opacity=".4"/>
+  <circle cx="22" cy="10" r="2.4" fill="#A78C9B" opacity=".55"/>
+  <circle cx="40" cy="10" r="2.8" fill="#A78C9B" opacity=".7"/>
+</symbol>
+
+<symbol id="illus-path" viewBox="0 0 60 60">
+  <path d="M10 50C10 30 20 20 30 10M30 10c10 10 20 20 20 40" fill="none" stroke="#A78C9B" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="1 7"/>
+</symbol>
+
 </defs>
 </svg>
 
@@ -717,6 +929,8 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
   <section id="hero" class="hero" aria-labelledby="hero-title">
     <span class="blob b1" aria-hidden="true"></span>
     <span class="blob b2" aria-hidden="true"></span>
+    <span class="illus illus--essential illus-reveal illus-float" style="--illus-opacity:.13; --illus-dur:11s; width:96px; height:96px; bottom:2%; right:2%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 120 120"><use href="#illus-bear"/></svg></span>
+    <span class="illus illus--essential illus-reveal" style="--illus-opacity:.45; width:26px; height:26px; bottom:24%; right:10%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 40 40"><use href="#illus-star"/></svg></span>
     <div class="container hero-grid">
       <div class="hero-text">
         <div class="hero-badges">
@@ -768,6 +982,10 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
        2. CONEXÃO
        ============================================================ -->
   <section id="conexao" class="section section--blue" aria-labelledby="conexao-title">
+    <span class="illus illus--standard illus-reveal illus-float" style="--illus-opacity:.18; --illus-dur:8.5s; width:54px; height:54px; top:8%; right:8%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 50 50"><use href="#illus-flower"/></svg></span>
+    <span class="illus illus--standard illus-reveal illus-float" style="--illus-opacity:.2; --illus-dur:8s; --illus-delay:1s; width:110px; height:77px; bottom:8%; left:4%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 100 70"><use href="#illus-book"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.55; width:34px; height:34px; bottom:4%; right:18%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 40 40"><use href="#illus-star"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.5; width:60px; height:36px; top:14%; left:10%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 60 36"><use href="#illus-sparkle"/></svg></span>
     <div class="container">
       <div class="connect-row">
         <div class="reveal">
@@ -793,6 +1011,11 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
        3. BENEFÍCIOS
        ============================================================ -->
   <section id="beneficios" class="section" aria-labelledby="beneficios-title">
+    <span class="illus illus--standard illus-reveal illus-float" style="--illus-opacity:.17; --illus-dur:11s; width:96px; height:96px; top:8%; right:3%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 120 120"><use href="#illus-bear"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.5; width:30px; height:18px; top:4%; left:14%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 40 20"><use href="#illus-bird"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.55; width:46px; height:46px; bottom:4%; right:14%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 50 50"><use href="#illus-flower"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.7; width:42px; height:42px; bottom:18%; left:4%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 50 50"><use href="#illus-flower"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.6; width:50px; height:50px; top:42%; left:1%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 60 60"><use href="#illus-leaves"/></svg></span>
     <div class="container">
       <div class="section-head center reveal">
         <span class="eyebrow">Acompanhamento psicológico infantil</span>
@@ -834,6 +1057,9 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
        4. SOBRE
        ============================================================ -->
   <section id="sobre" class="section section--yellow" aria-labelledby="sobre-title">
+    <span class="illus illus--standard illus-reveal illus-float" style="--illus-opacity:.15; --illus-dur:12s; width:84px; height:101px; top:6%; left:4%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 100 120"><use href="#illus-rabbit"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.1; width:130px; height:159px; bottom:0; right:2%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 90 110"><use href="#illus-tree"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.45; width:36px; height:36px; bottom:6%; left:8%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 60 60"><use href="#illus-leaves"/></svg></span>
     <div class="container about-grid">
       <div class="reveal">
         <div class="about-photo-wrap">
@@ -868,6 +1094,10 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
        ============================================================ -->
   <section id="especialidades" class="section" aria-labelledby="especialidades-title">
     <span class="dot-grid" aria-hidden="true"></span>
+    <span class="illus illus--standard illus-reveal illus-float" style="--illus-opacity:.14; --illus-dur:13s; width:72px; height:120px; top:4%; right:5%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 90 150"><use href="#illus-giraffe"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.5; width:40px; height:20px; top:10%; left:6%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 40 20"><use href="#illus-bird"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.4; width:32px; height:16px; top:18%; left:13%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 40 20"><use href="#illus-bird"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.5; width:36px; height:36px; bottom:5%; left:6%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 40 40"><use href="#illus-star"/></svg></span>
     <div class="container">
       <div class="section-head center reveal">
         <span class="eyebrow">Áreas de atuação</span>
@@ -892,6 +1122,8 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
        6. COMO FUNCIONA
        ============================================================ -->
   <section id="como-funciona" class="section section--lilac" aria-labelledby="como-funciona-title">
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.4; width:34px; height:34px; top:5%; right:7%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 60 60"><use href="#illus-leaves"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.45; width:30px; height:30px; bottom:4%; right:8%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 50 50"><use href="#illus-flower"/></svg></span>
     <div class="container">
       <div class="section-head center reveal">
         <span class="eyebrow">O processo</span>
@@ -907,12 +1139,21 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
             <h3>1. Conversa inicial</h3>
             <p>Um primeiro encontro para entender a demanda da família e esclarecer dúvidas sobre o processo.</p>
           </div>
+          <div class="timeline-icon-deco timeline-icon-deco--standard" aria-hidden="true" role="presentation">
+            <span class="deco-stage"><svg viewBox="0 0 120 120"><use href="#illus-bear"/></svg></span>
+          </div>
         </div>
         <div class="timeline-step reveal">
           <span class="timeline-num"><svg viewBox="0 0 48 48" width="24" height="24"><use href="#icon-search"/></svg></span>
           <div class="timeline-content">
             <h3>2. Avaliação</h3>
             <p>Momento dedicado a compreender o contexto, a história e as necessidades da criança.</p>
+          </div>
+          <div class="timeline-icon-deco timeline-icon-deco--extra timeline-icon-deco--bottom-right" aria-hidden="true" role="presentation">
+            <span class="deco-stage">
+              <svg viewBox="0 0 120 120"><use href="#illus-bear"/></svg>
+              <svg class="deco-companion" viewBox="0 0 60 20"><use href="#illus-motion"/></svg>
+            </span>
           </div>
         </div>
         <div class="timeline-step reveal">
@@ -921,6 +1162,12 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
             <h3>3. Planejamento</h3>
             <p>Organização do acompanhamento de acordo com as particularidades de cada caso.</p>
           </div>
+          <div class="timeline-icon-deco timeline-icon-deco--standard timeline-icon-deco--bottom-right" aria-hidden="true" role="presentation">
+            <span class="deco-stage">
+              <svg viewBox="0 0 120 120"><use href="#illus-bear"/></svg>
+              <svg class="deco-companion" viewBox="0 0 60 60"><use href="#illus-path"/></svg>
+            </span>
+          </div>
         </div>
         <div class="timeline-step reveal">
           <span class="timeline-num"><svg viewBox="0 0 48 48" width="24" height="24"><use href="#icon-calendar"/></svg></span>
@@ -928,12 +1175,24 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
             <h3>4. Acompanhamento</h3>
             <p>Sessões regulares, conduzidas em ritmo e linguagem adequados à infância.</p>
           </div>
+          <div class="timeline-icon-deco timeline-icon-deco--extra timeline-icon-deco--bottom-right" aria-hidden="true" role="presentation">
+            <span class="deco-stage">
+              <svg viewBox="0 0 120 120"><use href="#illus-bear"/></svg>
+              <svg class="deco-companion" viewBox="0 0 40 40"><use href="#illus-star"/></svg>
+            </span>
+          </div>
         </div>
         <div class="timeline-step reveal">
           <span class="timeline-num"><svg viewBox="0 0 48 48" width="24" height="24"><use href="#icon-people"/></svg></span>
           <div class="timeline-content">
             <h3>5. Orientação familiar</h3>
             <p>Encontros com os responsáveis para alinhar percepções e apoiar o processo também em casa.</p>
+          </div>
+          <div class="timeline-icon-deco timeline-icon-deco--standard timeline-icon-deco--bottom-right" aria-hidden="true" role="presentation">
+            <span class="deco-stage">
+              <svg viewBox="0 0 120 120"><use href="#illus-bear"/></svg>
+              <svg class="deco-companion" viewBox="0 0 50 50"><use href="#illus-flower"/></svg>
+            </span>
           </div>
         </div>
       </div>
@@ -944,6 +1203,9 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
        7. DIFERENCIAIS
        ============================================================ -->
   <section id="diferenciais" class="section" aria-labelledby="diferenciais-title">
+    <span class="illus illus--standard illus-reveal illus-float" style="--illus-opacity:.18; --illus-dur:9.5s; width:78px; height:78px; top:6%; right:4%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 110 110"><use href="#illus-fox"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.6; width:38px; height:38px; bottom:10%; left:5%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 50 50"><use href="#illus-flower"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.45; width:44px; height:54px; top:8%; left:8%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 60 60"><use href="#illus-leaves"/></svg></span>
     <div class="container">
       <div class="section-head center reveal">
         <span class="eyebrow">Diferenciais</span>
@@ -979,6 +1241,9 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
        8. FAQ
        ============================================================ -->
   <section id="faq" class="section section--blue" aria-labelledby="faq-title">
+    <span class="illus illus--standard illus-reveal illus-float" style="--illus-opacity:.14; --illus-dur:10.5s; width:96px; height:80px; bottom:6%; right:4%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 120 100"><use href="#illus-elephant"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.5; width:40px; height:20px; top:8%; left:6%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 40 20"><use href="#illus-bird"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.5; width:60px; height:30px; bottom:8%; left:6%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 60 30"><use href="#illus-sparkle"/></svg></span>
     <div class="container">
       <div class="section-head center reveal">
         <span class="eyebrow">Dúvidas frequentes</span>
@@ -1044,6 +1309,11 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
        ============================================================ -->
   <section id="contato" class="cta-final" aria-labelledby="cta-title">
     <span class="blob" aria-hidden="true"></span>
+    <span class="illus illus--standard illus-reveal" style="--illus-opacity:.5; width:340px; height:181px; top:0; left:50%; transform:translateX(-50%);" aria-hidden="true" role="presentation"><svg viewBox="0 0 300 160"><use href="#illus-starry-sky"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.4; width:26px; height:26px; top:10%; left:10%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 40 40"><use href="#illus-star"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.35; width:20px; height:20px; top:22%; right:12%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 40 40"><use href="#illus-star"/></svg></span>
+    <span class="illus illus--extra illus-reveal illus-float" style="--illus-opacity:.1; --illus-dur:14s; width:70px; height:70px; bottom:4%; left:6%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 120 120"><use href="#illus-bear-soft"/></svg></span>
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.3; width:18px; height:18px; bottom:14%; right:10%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 40 40"><use href="#illus-star"/></svg></span>
     <div class="container cta-final-inner reveal">
       <h2 id="cta-title">Cuidar da saúde emocional na infância também faz parte do desenvolvimento.</h2>
       <p>Se você sente que esse pode ser um caminho importante para o seu filho ou sua filha, entre em contato. O primeiro passo é uma conversa, sem compromisso.</p>
@@ -1087,6 +1357,7 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
        10. LOCALIZAÇÃO
        ============================================================ -->
   <section id="localizacao" class="section" aria-labelledby="localizacao-title">
+    <span class="illus illus--extra illus-reveal" style="--illus-opacity:.4; width:40px; height:40px; top:6%; right:6%;" aria-hidden="true" role="presentation"><svg viewBox="0 0 60 60"><use href="#illus-leaves"/></svg></span>
     <div class="container">
       <div class="section-head center reveal">
         <span class="eyebrow">Atendimento presencial</span>
@@ -1241,6 +1512,19 @@ a:focus-visible, button:focus-visible{outline:3px solid var(--green-gray); outli
     document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
   } else {
     document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  // Narrativa visual: as ilustrações de cada seção surgem e desaparecem
+  // conforme acompanham a navegação (entram ao aparecer, saem ao sair da tela).
+  if ('IntersectionObserver' in window){
+    var illusObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        entry.target.classList.toggle('in-view', entry.isIntersecting);
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -10% 0px'});
+    document.querySelectorAll('.illus').forEach(function(el){ illusObserver.observe(el); });
+  } else {
+    document.querySelectorAll('.illus').forEach(function(el){ el.classList.add('in-view'); });
   }
 
   // Formulário de contato -> redireciona para o WhatsApp com os dados preenchidos
